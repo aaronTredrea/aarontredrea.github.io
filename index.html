@@ -165,8 +165,14 @@
   #projects { background: var(--bg2); }
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+  }
+  @media (max-width: 1024px) {
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .projects-grid { grid-template-columns: 1fr; }
   }
   .app-card {
     background: var(--card-bg);
@@ -398,6 +404,84 @@
     .timeline-item::before { left: 84px; }
     footer { padding: 40px 20px; }
   }
+
+  /* ── TIMELINE REDESIGN ──────────────────────────────────── */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item {
+    display: grid; grid-template-columns: 160px 1fr;
+    gap: 0 32px; padding: 32px 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-date {
+    font-size: 12px; color: var(--dim); font-weight: 500;
+    padding-top: 3px; text-align: right;
+    line-height: 1.5;
+  }
+  .timeline-content { flex: 1; }
+  .timeline-name {
+    font-size: 15px; font-weight: 700; color: var(--white);
+    margin-bottom: 2px;
+  }
+  .timeline-role { font-size: 12px; color: var(--accent); font-weight: 500; margin-bottom: 2px; }
+  .timeline-cat  { font-size: 12px; color: var(--mid); margin-bottom: 10px; }
+  .timeline-desc { font-size: 13px; color: var(--mid); }
+  .timeline-bullets {
+    list-style: none; padding: 0; margin: 8px 0 10px;
+  }
+  .timeline-bullets li {
+    font-size: 13px; color: var(--mid); padding: 3px 0 3px 18px;
+    position: relative; line-height: 1.5;
+  }
+  .timeline-bullets li::before {
+    content: ''; position: absolute; left: 0; top: 11px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); opacity: 0.7;
+  }
+  .timeline-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--dim); font-weight: 500;
+    margin-top: 6px; cursor: pointer; transition: color 0.2s;
+    text-decoration: none;
+  }
+  .timeline-link:hover { color: var(--accent); }
+  .timeline-link svg { width: 12px; height: 12px; }
+
+  /* Agency grouping */
+  .timeline-agency-header {
+    background: var(--bg2); border: 1px solid var(--divider);
+    border-radius: 10px; padding: 18px 22px; margin-bottom: 0;
+  }
+  .timeline-agency-header .timeline-name { font-size: 16px; }
+  .timeline-agency-desc {
+    font-size: 13px; color: var(--mid); margin-top: 8px; line-height: 1.6;
+  }
+  .agency-projects { padding-left: 24px; border-left: 2px solid var(--divider); margin: 12px 0 0 16px; }
+  .agency-project {
+    padding: 20px 0; border-bottom: 1px solid var(--divider);
+  }
+  .agency-project:last-child { border-bottom: none; }
+  .agency-project-name {
+    font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 2px;
+  }
+  .agency-project-date { font-size: 11px; color: var(--dim); margin-bottom: 8px; }
+
+  /* Video player */
+  .timeline-video {
+    margin: 10px 0 12px;
+    border-radius: 10px; overflow: hidden;
+    background: #000; max-width: 340px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  .timeline-video video {
+    width: 100%; display: block; border-radius: 10px;
+  }
+
+  @media (max-width: 700px) {
+    .timeline-item { grid-template-columns: 1fr; gap: 4px; }
+    .timeline-date { text-align: left; margin-bottom: 4px; }
+  }
+
 </style>
 </head>
 <body>
@@ -443,6 +527,7 @@
         View Projects
       </a>
       <a href="mailto:atiosdev@pm.me" class="btn btn-outline">Get in touch</a>
+      <a href="https://aarontredrea.github.io" target="_blank" class="btn btn-outline">Portfolio</a>
     </div>
     <div class="hero-stats">
       <div>
@@ -454,8 +539,8 @@
         <div class="stat-label">Apps Shipped</div>
       </div>
       <div>
-        <div class="stat-num">M<span>+</span></div>
-        <div class="stat-label">Users Reached</div>
+        <div class="stat-num">100M<span>+</span></div>
+        <div class="stat-label">Downloads</div>
       </div>
       <div>
         <div class="stat-num">#1<span></span></div>
@@ -534,6 +619,8 @@
           <span class="skill-tag">SceneKit</span><span class="skill-tag">WidgetKit</span>
           <span class="skill-tag">TipKit</span><span class="skill-tag">StoreKit</span>
           <span class="skill-tag">PassKit</span><span class="skill-tag">AuthenticationServices</span>
+          <span class="skill-tag">VisionKit</span><span class="skill-tag">Speech</span>
+          <span class="skill-tag">CloudKit</span><span class="skill-tag">Photos</span>
         </div>
       </div>
       <div class="skill-group">
@@ -543,8 +630,8 @@
           <span class="skill-tag">Firestore</span><span class="skill-tag">Realm</span>
           <span class="skill-tag">SwiftData</span><span class="skill-tag">Core Data</span>
           <span class="skill-tag">Codable</span><span class="skill-tag">JSON</span>
-          <span class="skill-tag">WebKit / WKWebView</span><span class="skill-tag">CoreLocation</span>
-          <span class="skill-tag">MapKit</span>
+          <span class="skill-tag">WebKit / WKWebView</span><span class="skill-tag">WebSockets</span><span class="skill-tag">WebRTC</span><span class="skill-tag">CoreLocation</span>
+          <span class="skill-tag">CoreMotion</span><span class="skill-tag">MapKit</span>
         </div>
       </div>
       <div class="skill-group">
@@ -572,7 +659,7 @@
           <span class="skill-tag">AVFoundation</span><span class="skill-tag">AVKit</span>
           <span class="skill-tag">Lottie</span><span class="skill-tag">CIFilters</span>
           <span class="skill-tag">CoreImage</span><span class="skill-tag">Vision</span>
-          <span class="skill-tag">Generative Audio</span><span class="skill-tag">Charts</span>
+          <span class="skill-tag">Generative Audio</span><span class="skill-tag">AudioKit</span><span class="skill-tag">Charts</span>
           <span class="skill-tag">CryptoKit</span>
         </div>
       </div>
@@ -585,7 +672,7 @@
           <span class="skill-tag">TestFlight</span><span class="skill-tag">Fastlane</span>
           <span class="skill-tag">GitHub Actions</span><span class="skill-tag">Figma</span>
           <span class="skill-tag">Sketch</span><span class="skill-tag">Affinity Designer</span>
-          <span class="skill-tag">Reality Composer</span>
+          <span class="skill-tag">Reality Composer</span><span class="skill-tag">Unity</span><span class="skill-tag">Flutter</span>
         </div>
       </div>
       <div class="skill-group">
@@ -609,9 +696,349 @@
     <div class="reveal">
       <p class="section-label">Experience</p>
       <h2 class="section-title">Work History</h2>
-      <p class="section-sub">Over a decade of freelance iOS development across a wide range of industries.</p>
+      <p class="section-sub">16 years of iOS development across startups, agencies, and product teams — from greenfield builds to apps with millions of users.</p>
     </div>
-    <div class="timeline reveal" id="timeline"></div>
+    <div class="timeline reveal" id="timeline">
+
+<!-- TIMELINE IS STATIC HTML -->
+
+
+      <!-- FLYP -->
+      <div class="timeline-item">
+        <div class="timeline-date">May 2022 – Apr 2026</div>
+        <div class="timeline-content">
+          <div class="timeline-name">FLYP</div>
+          <div class="timeline-role">Founding iOS Engineer | Product, UX &amp; Growth</div>
+          <div class="timeline-cat">3D Fashion Editor &amp; Print on Demand</div>
+          <ul class="timeline-bullets">
+            <li>Led development of a cross-platform print-on-demand platform across iOS, iPadOS, macOS, and visionOS</li>
+            <li>Built and scaled the iOS app to over 1.3 million downloads — 4.6★ rating from 6,000+ reviews, multiple App Store features including App of the Day in 175 regions</li>
+            <li>Developed AI-powered tooling to help creators and businesses generate clothing designs, branding assets, and social-ready media</li>
+            <li>Shaped product direction from MVP through continuous release cycles; supported a £2M+ fundraising effort</li>
+            <li>Selected by YouTube as one of only six official shopping partner apps with native YouTube and YouTube Studio integration</li>
+            <li>Invited by Apple to its exclusive Vision Pro lab in London for early visionOS development</li>
+            <li>Created the first Android version of the app in Flutter</li>
+            <li>Key frameworks: RealityKit · CoreML · SwiftUI · UIKit · Combine · Stripe · Shopify · Firebase · OpenAI · Claude · Gemini · Custom Swift Packages</li>
+          </ul>
+          <a class="timeline-link" href="https://apps.apple.com/us/app/flyp-fashion-design-studio/id1605986264" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <!-- Vertera -->
+      <div class="timeline-item">
+        <div class="timeline-date">Aug 2025 – Jan 2026</div>
+        <div class="timeline-content">
+          <div class="timeline-name">Vertera Mobile</div>
+          <div class="timeline-role">Senior iOS Developer</div>
+          <div class="timeline-cat">Mobile Shopping App</div>
+          <ul class="timeline-bullets">
+            <li>Built a new shopping app in SwiftUI from Figma designs</li>
+            <li>Integrated complex tree views, order tracking and team management features</li>
+          </ul>
+          <a class="timeline-link" href="https://apps.apple.com/au/app/vertera-mobile/id6753757322" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <!-- Moosia -->
+      <div class="timeline-item">
+        <div class="timeline-date">Jun 2020 – Mar 2024</div>
+        <div class="timeline-content">
+          <div class="timeline-name">Moosia</div>
+          <div class="timeline-role">Founding iOS Engineer</div>
+          <div class="timeline-cat">Missing Pet Finder App</div>
+          <ul class="timeline-bullets">
+            <li>Collaborated on a missing pet finder app to help reunite people with their lost loved ones</li>
+            <li>Implemented profile management, GPS tracking, Firebase functions and push notifications</li>
+            <li>Built entirely in SwiftUI</li>
+          </ul>
+          <a class="timeline-link" href="https://apps.apple.com/us/app/missing-pet-finder/id1480372875" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <!-- WOLF -->
+      <div class="timeline-item">
+        <div class="timeline-date">Jun 2021 – May 2022</div>
+        <div class="timeline-content">
+          <div class="timeline-name">WOLF (Palringo)</div>
+          <div class="timeline-role">Senior iOS Developer</div>
+          <div class="timeline-cat">Social Chat App · Millions of users</div>
+          <ul class="timeline-bullets">
+            <li>Redesigned tired features from Figma designs to modernise the app experience</li>
+            <li>Refactored Objective-C legacy code to Swift and SwiftUI</li>
+            <li>Integrated WebRTC for 'Audio Stages' — a real-time feature where users hold mic slots to communicate</li>
+            <li>Refactored chat features using WebSockets with complex debouncing for high-frequency threads</li>
+            <li>Implemented app-wide theme support for full skin customisation</li>
+          </ul>
+          <a class="timeline-link" href="https://apps.apple.com/th/app/wolf-qanawat/id286274367" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <!-- Moovya -->
+      <div class="timeline-item">
+        <div class="timeline-date">Oct 2020 – Mar 2021</div>
+        <div class="timeline-content">
+          <div class="timeline-name">Moovya</div>
+          <div class="timeline-role">Senior iOS Developer</div>
+          <div class="timeline-cat">AI / ML Exercise App</div>
+          <div class="timeline-video">
+            <video controls preload="none" poster="">
+              <source src="Moovya_redacted.mp4" type="video/mp4">
+            </video>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Built an AI/ML exercise app from the ground up</li>
+            <li>Worked directly with one of the largest design agencies in Europe</li>
+            <li>Integrated Unity for immersive, game-quality in-app experiences</li>
+          </ul>
+          <a class="timeline-link" href="https://www.instagram.com/moovya.app/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            View on Instagram
+          </a>
+        </div>
+      </div>
+
+      <!-- Point In Passing / NON -->
+      <div class="timeline-item">
+        <div class="timeline-date">Aug 2019 – Jan 2020</div>
+        <div class="timeline-content">
+          <div class="timeline-name">Point In Passing</div>
+          <div class="timeline-role">Senior iOS Developer</div>
+          <div class="timeline-cat">NON ◦ Sound Meditation — Generative Audio App</div>
+          <ul class="timeline-bullets">
+            <li>Generative audio meditation app written in Swift and SwiftUI</li>
+            <li>Integrated StoreKit for monetisation and subscription management</li>
+            <li>Added new menu, widget and audio feature capabilities</li>
+            <li>Localised app for multiple markets and set up tracking funnels</li>
+            <li>AudioKit integration and migrations for advanced audio synthesis</li>
+          </ul>
+          <a class="timeline-link" href="https://apps.apple.com/us/app/non-sound-meditation/id1367738672" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <!-- Whisp -->
+      <div class="timeline-item">
+        <div class="timeline-date">Aug 2019 – Sep 2019</div>
+        <div class="timeline-content">
+          <div class="timeline-name">Whisp</div>
+          <div class="timeline-role">Senior iOS Developer</div>
+          <div class="timeline-cat">Intermittent Fasting App</div>
+          <div class="timeline-video">
+            <video controls preload="none" poster="">
+              <source src="RPReplay_Final1595233193.MP4" type="video/mp4">
+            </video>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Built an intermittent fasting app from scratch in Swift</li>
+            <li>Collaborated remotely with the founder via Figma to design the full app experience</li>
+            <li>Integrated scheduled alerts and progress tracking to keep users on plan</li>
+          </ul>
+          <a class="timeline-link" href="https://apps.apple.com/au/app/clear-intermittent-fasting/id1511994871" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <!-- AGENCY: STANWOOD -->
+      <div class="timeline-item">
+        <div class="timeline-date">Feb 2017 – Jul 2020</div>
+        <div class="timeline-content">
+          <div class="timeline-agency-header">
+            <div class="timeline-name">Stanwood</div>
+            <div class="timeline-role">Lead iOS Developer</div>
+            <div class="timeline-cat">Agency · Remote</div>
+            <div class="timeline-agency-desc">Managed squads for multiple simultaneous client projects at one of Europe's largest remote agencies. Served as direct contact between clients and project managers, and contributed to a custom in-house architecture and SDK for consistent codebases.</div>
+          </div>
+          <div class="agency-projects">
+            <div class="agency-project">
+              <div class="agency-project-name">H&amp;M — R&amp;D</div>
+              <ul class="timeline-bullets">
+                <li>Created 'Wearable Vibes' using ARKit and the Vision Framework</li>
+                <li>Image recognition identifies a marker on clothing, then renders a user's 3D avatar in AR attached to the garment</li>
+              </ul>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Glamour — Condé Nast</div>
+              <ul class="timeline-bullets">
+                <li>App maintenance followed by a complete Objective-C to Swift refactor</li>
+                <li>Heavy deeplink integration enabling in-app navigation similar to a web experience</li>
+              </ul>
+              <a class="timeline-link" href="https://www.condenast.com/brands/glamour" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                condenast.com
+              </a>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Shape Republic</div>
+              <div class="agency-project-date">Mar 2017 – Jun 2017</div>
+              <ul class="timeline-bullets">
+                <li>Greenfield fitness app built from start to finish</li>
+                <li>Heavy focus on custom transitions and high-quality UI</li>
+              </ul>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Film.at</div>
+              <div class="agency-project-date">Sep 2017 – Jan 2018</div>
+              <ul class="timeline-bullets">
+                <li>Maintenance and feature updates for a cinema programmes app</li>
+              </ul>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Schneehoehen</div>
+              <div class="agency-project-date">Jun 2017 – Sep 2017</div>
+              <ul class="timeline-bullets">
+                <li>Maintenance and updates for a seasonal skiing information app</li>
+              </ul>
+              <a class="timeline-link" href="https://apps.apple.com/lu/app/schneehoehen-ski-app/id411882850" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                View on App Store
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Veri -->
+      <div class="timeline-item">
+        <div class="timeline-date">Dec 2016 – Feb 2017</div>
+        <div class="timeline-content">
+          <div class="timeline-name">Veri</div>
+          <div class="timeline-role">Senior iOS Developer</div>
+          <div class="timeline-cat">Celebrity Fan Video Call App</div>
+          <ul class="timeline-bullets">
+            <li>Credits-based app allowing fans to book one-to-one video calls with celebrities</li>
+            <li>Migrated existing video conferencing app from Swift 2.3 to Swift 3</li>
+            <li>Integrated custom design changes and payment flows using StoreKit</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- LegalZoom -->
+      <div class="timeline-item">
+        <div class="timeline-date">Jun 2016 – Nov 2016</div>
+        <div class="timeline-content">
+          <div class="timeline-name">LegalZoom</div>
+          <div class="timeline-role">Senior iOS Developer</div>
+          <div class="timeline-cat">Digital Will App</div>
+          <ul class="timeline-bullets">
+            <li>Created 'Legacy' — a digital will app as part of a close-knit team</li>
+            <li>Built an iPhone app for creating a will of testament: relatives, assets, and complex transfer agreements wrapped in an elegant UI</li>
+            <li>Transitioned from prototype to fully developed production application in Swift</li>
+          </ul>
+          <a class="timeline-link" href="https://www.legalzoom.com/country/gb" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            legalzoom.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Infinity8 -->
+      <div class="timeline-item">
+        <div class="timeline-date">Jan 2015 – May 2016</div>
+        <div class="timeline-content">
+          <div class="timeline-name">Infinity8 Software</div>
+          <div class="timeline-role">Founding iOS Developer</div>
+          <div class="timeline-cat">iBeacon &amp; AR Framework</div>
+          <ul class="timeline-bullets">
+            <li>Designed, launched, and managed a white-label platform with custom CMS, iBeacon and AR framework for iPhone and iPad</li>
+            <li>Enabled venues to create guided tours with beacons indoors and GPS outdoors, with AR content overlaid using location data</li>
+            <li>Generated partnerships leading to installs at universities and major UK music festivals</li>
+            <li>Pre-ARKit implementation using camera metadata, CoreLocation and CoreMotion for immersive experiences</li>
+          </ul>
+          <a class="timeline-link" href="https://www.infinity-eight.com" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            infinity-eight.com
+          </a>
+        </div>
+      </div>
+
+      <!-- AGENCY: INTOHAND -->
+      <div class="timeline-item">
+        <div class="timeline-date">Feb 2013 – Feb 2016</div>
+        <div class="timeline-content">
+          <div class="timeline-agency-header">
+            <div class="timeline-name">IntoHand</div>
+            <div class="timeline-role">iOS Developer</div>
+            <div class="timeline-cat">Agency · Bath &amp; London</div>
+            <div class="timeline-agency-desc">App agency building new apps and maintaining existing apps for high-profile clients across retail, media, health and enterprise.</div>
+          </div>
+          <div class="agency-projects">
+            <div class="agency-project">
+              <div class="agency-project-name">LADbible</div>
+              <ul class="timeline-bullets"><li>Built the full iPhone and iPad news app from scratch</li></ul>
+              <a class="timeline-link" href="https://apps.apple.com/us/app/ladbible/id1439782255" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                View on App Store
+              </a>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Tesco</div>
+              <ul class="timeline-bullets"><li>Maintenance of the iPhone and iPad grocery shopping app</li></ul>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">National Trust</div>
+              <ul class="timeline-bullets"><li>Feature updates for the guide to memorable UK days out</li></ul>
+              <a class="timeline-link" href="https://apps.apple.com/gb/app/national-trust-days-out-app/id360792792" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                View on App Store
+              </a>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">WeSwap</div>
+              <ul class="timeline-bullets"><li>Assisted in building V1 of a peer-to-peer currency exchange app</li></ul>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Consentz</div>
+              <ul class="timeline-bullets"><li>Built the full iPad and iPhone app for doctor surgery management</li></ul>
+              <a class="timeline-link" href="https://apps.apple.com/us/app/consentz/id1292663553" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                View on App Store
+              </a>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">British American Tobacco</div>
+              <ul class="timeline-bullets"><li>iPhone prototype using OCR for document scanning</li></ul>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Ford</div>
+              <ul class="timeline-bullets"><li>iPhone and SDK R&amp;D for making vehicles more intelligent</li></ul>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Happiness by Design</div>
+              <ul class="timeline-bullets"><li>Wellbeing app based on Paul Dolan's bestselling book on behavioural science</li></ul>
+              <a class="timeline-link" href="https://en.wikipedia.org/wiki/Paul_Dolan_(behavioural_scientist)" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Paul Dolan — Wikipedia
+              </a>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Getting Into Gear</div>
+              <ul class="timeline-bullets"><li>Built everything — iPad and iPhone interactive brochure for custom engines</li></ul>
+            </div>
+            <div class="agency-project">
+              <div class="agency-project-name">Gigit</div>
+              <ul class="timeline-bullets"><li>Built a full Ticketmaster-style festival merchandise and ticketing app</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -620,7 +1047,8 @@
   <div class="name"><span>Aaron</span> Tredrea</div>
   <div class="contact">
     iOS Developer &amp; UI/UX Specialist &nbsp;·&nbsp;
-    <a href="mailto:atiosdev@pm.me">atiosdev@pm.me</a>
+    <a href="mailto:atiosdev@pm.me">atiosdev@pm.me</a> &nbsp;·&nbsp;
+    <a href="https://aarontredrea.github.io">aarontredrea.github.io</a>
   </div>
   <div class="copy">Built with care. Ready to ship.</div>
 </footer>
@@ -628,37 +1056,17 @@
 <script>
 // ── DATA ────────────────────────────────────────────────────
 const PROJECTS = [
-  { id:'1605986264', name:'FLYP', role:'Founding iOS Engineer', cat:'3D Fashion Editor & Print on Demand', dates:'May 2022 – Present',  url:'https://apps.apple.com/us/app/flyp-fashion-design-studio/id1605986264' },
-  { id:'1367738672', name:'NON ◦ Sound Meditation', role:'Lead iOS Developer', cat:'Generative Audio Meditation App', dates:'Jun 2023 – Present', url:'https://apps.apple.com/us/app/non-sound-meditation/id1367738672' },
-  { id:'286274367',  name:'WOLF', role:'iOS Developer', cat:'Chat App', dates:'Apr 2021 – May 2022', url:'https://apps.apple.com/th/app/wolf-qanawat/id286274367' },
-  { id:'6753757322', name:'Vertera Mobile', role:'Lead iOS Developer', cat:'Mobile Shopping App', dates:'2025 – 2026', url:'https://apps.apple.com/th/app/vertera-mobile/id6753757322' },
-  { id:'1439782255', name:'LADbible', role:'iOS Developer', cat:'Social News App', dates:'Nov 2014 – Mar 2015', url:'https://apps.apple.com/us/app/ladbible/id1439782255' },
-  { id:'360792792',  name:'National Trust', role:'iOS Developer', cat:'Travel & Heritage App', dates:'Mar 2015 – Apr 2015', url:'https://apps.apple.com/gb/app/national-trust-days-out-app/id360792792' },
+  { id:'1605986264', name:'FLYP',                  role:'Founding iOS Engineer',   cat:'3D Fashion Editor & Print on Demand',    dates:'May 2022 – Apr 2026', url:'https://apps.apple.com/us/app/flyp-fashion-design-studio/id1605986264' },
+  { id:'1480372875', name:'Moosia',                role:'Founding iOS Engineer',   cat:'Missing Pet Finder App',                 dates:'Jun 2020 – Mar 2024', url:'https://apps.apple.com/us/app/missing-pet-finder/id1480372875' },
+  { id:'286274367',  name:'WOLF',                  role:'Senior iOS Developer',    cat:'Social Chat App',                        dates:'Jun 2021 – May 2022', url:'https://apps.apple.com/th/app/wolf-qanawat/id286274367' },
+  { id:'6753757322', name:'Vertera Mobile',        role:'Senior iOS Developer',    cat:'Mobile Shopping App',                    dates:'Aug 2025 – Jan 2026', url:'https://apps.apple.com/au/app/vertera-mobile/id6753757322' },
+  { id:'1367738672', name:'NON ◦ Sound Meditation',role:'Senior iOS Developer',    cat:'Generative Audio Meditation App',        dates:'Aug 2019 – Jan 2020', url:'https://apps.apple.com/us/app/non-sound-meditation/id1367738672' },
+  { id:'1511994871', name:'Whisp',                 role:'Senior iOS Developer',    cat:'Intermittent Fasting App',               dates:'Aug 2019 – Sep 2019', url:'https://apps.apple.com/au/app/clear-intermittent-fasting/id1511994871' },
+  { id:'1439782255', name:'LADbible',              role:'iOS Developer',           cat:'Social News App',                        dates:'Nov 2014 – Mar 2015', url:'https://apps.apple.com/us/app/ladbible/id1439782255' },
+  { id:'360792792',  name:'National Trust',        role:'iOS Developer',           cat:'Travel & Heritage App',                  dates:'Mar 2015 – Apr 2015', url:'https://apps.apple.com/gb/app/national-trust-days-out-app/id360792792' },
+  { id:'1292663553', name:'Consentz',              role:'iOS Developer',           cat:'Doctor Surgery Management App',          dates:'Apr 2015 – Aug 2015', url:'https://apps.apple.com/us/app/consentz/id1292663553' },
 ];
 
-const WORK = [
-  ['Moovya',              'Lead iOS Developer',   'AI / ML Exercise App',            'Oct 2020 – Mar 2021'],
-  ['Non',                 'Lead iOS Developer',   'Meditation App',                  'Aug 2019 – Jan 2020'],
-  ['Whisp',               'Lead iOS Developer',   'Fasting App',                     'Jun 2019 – Aug 2019'],
-  ['Best Burgers',        'Senior iOS Developer', 'Location-based Social App',       'Apr 2019 – Jun 2019'],
-  ['Film.at',             'Lead iOS Developer',   'Cinema Times App',                'Sep 2017 – Jan 2018'],
-  ['Schneehoehen',        'Lead iOS Developer',   'Seasonal Ski Info App',           'Jun 2017 – Sep 2017'],
-  ['Shape Republic',      'Lead iOS Developer',   'Fitness & Yoga App',              'Mar 2017 – Jun 2017'],
-  ['Veri',                'Senior iOS Developer', 'Video Fan Call App',              'Jan 2017 – Mar 2017'],
-  ['LegalZoom',           'Senior iOS Developer', 'Digital Will App',                'Jun 2016 – Dec 2016'],
-  ['Infinity8',           'Senior iOS Developer', 'AR / iBeacon Framework',          'Feb 2016 – Jun 2016'],
-  ['Project 6 Pack',      'Senior iOS Developer', 'Fitness & Meal Planner',          'Dec 2015 – Feb 2016'],
-  ['Pill Box Reminder',   'Senior iOS Developer', 'Medicine Reminder App',           'Sep 2015 – Dec 2015'],
-  ['Magnifying Me',       'Senior iOS Developer', 'Magnifier Utility App',           'Aug 2015 – Sep 2015'],
-  ['Consentz',            'Senior iOS Developer', 'iPad / iPhone for Dr Surgery',    'Apr 2015 – Aug 2015'],
-  ['National Trust',      'Senior iOS Developer', 'Travel & Heritage App',           'Mar 2015 – Apr 2015'],
-  ['LADbible',            'iOS Developer',        'Social News App',                 'Nov 2014 – Mar 2015'],
-  ['WeSwap',              'iOS Developer',        'Currency Exchange App',           'Aug 2014 – Nov 2014'],
-  ['Gigit',               'iOS Developer',        'Festival Merchandise App',        'May 2014 – Aug 2014'],
-  ['Happiness by Design', 'iOS Developer',        'Wellbeing / Stress App',          'Feb 2014 – May 2014'],
-  ['Getting Into Gear',   'iOS Developer',        'iPad / iPhone for Oil Company',   'Nov 2013 – Feb 2014'],
-  ['Intohand',            'iOS Developer',        'R&D, Prototyping, Design',        'Feb 2013 – Nov 2013'],
-];
 
 // ── HELPERS ──────────────────────────────────────────────────
 function iconFallback(img, initial) {
@@ -740,19 +1148,6 @@ function renderCard(proj, appData) {
     </div>`;
 }
 
-// ── BUILD TIMELINE ───────────────────────────────────────────
-function buildTimeline() {
-  const tl = document.getElementById('timeline');
-  tl.innerHTML = WORK.map(([name, role, desc, date]) => `
-    <div class="timeline-item">
-      <div class="timeline-date">${date}</div>
-      <div class="timeline-content">
-        <div class="timeline-name">${name}</div>
-        <div class="timeline-role">${role}</div>
-        <div class="timeline-desc">${desc}</div>
-      </div>
-    </div>`).join('');
-}
 
 // ── INIT ─────────────────────────────────────────────────────
 async function init() {
@@ -779,7 +1174,6 @@ async function init() {
       </div>
     </div>`).join('');
 
-  buildTimeline();
 
   // Fetch app data concurrently and replace cards as data arrives
   const fetches = PROJECTS.map(async (proj, i) => {
